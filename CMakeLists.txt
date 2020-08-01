@@ -6,7 +6,9 @@ endif()
 
 project(Rlib VERSION 0.0.1 DESCRIPTION "Rlib is a library for real time robotics applications")
 
+###############################################################################
 # Find requirements
+###############################################################################
 if(NOT fastcdr_FOUND)
     find_package(fastcdr REQUIRED)
 endif()
@@ -17,7 +19,9 @@ endif()
 
 set(WARNING_FLAGS ON)
 
+###############################################################################
 # Set C++11
+###############################################################################
 include(CheckCXXCompilerFlag)
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG OR
         CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -29,19 +33,20 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG OR
     endif()
 endif()
 
-###################
+###############################################################################
 # INCLUDE AND SRC #
-###################
+###############################################################################
 set(RLIB_SRC
     ${CMAKE_CURRENT_LIST_DIR}/src/Publisher.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/Subscriber.cpp
 )
 
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
-#===============================================================================
 
 
+###############################################################################
 # Compile as a library
+###############################################################################
 add_library(Rlib ${RLIB_SRC})
 
 set_target_properties(Rlib PROPERTIES VERSION ${PROJECT_VERSION})

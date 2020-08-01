@@ -94,7 +94,7 @@ namespace rlib {
           samples_++;
           //std::cout << "Temperature: " << data_.temperature() << " with variance: " << data_.variance()
           //          << " RECEIVED." << std::endl;
-                    std::cout << " RECEIVED." << std::endl;
+                    std::cout <<  samples_ << " RECEIVED." << std::endl;
         }
       }
   }

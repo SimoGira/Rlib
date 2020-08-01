@@ -36,8 +36,6 @@ namespace rlib {
 
         void on_data_available(eprosima::fastdds::dds::DataReader* reader) override;
 
-        //HelloWorld hello_;
-
         void* data_;
 
         std::atomic_int samples_;

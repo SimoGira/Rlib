@@ -78,6 +78,9 @@ namespace rlib {
   }
 
   bool Publisher::publish() {
+    if (data_ == nullptr) {
+      return false;
+    }
     if (listener_.matched_ > 0) {
         //hello_.index(hello_.index() + 1);
         writer_->write(&data_);
@@ -94,11 +97,11 @@ namespace rlib {
             //std::cout << "Message: " << hello_.message() << " with index: " << hello_.index()
             std::cout  << " SENT" << std::endl;
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
   }
 
-  // TODO: Call this befor Publisher::init()
+  // TODO: Call this before publish
   void Publisher::load(void* data){
     data_ = data;
   }
