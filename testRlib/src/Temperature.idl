@@ -1,0 +1,5 @@
+struct Temperature {
+    float temperature;     // Measurement of the Temperature in Degrees Celsius
+    float variance;        // 0 is interpreted as variance unknown
+    // TODO: include timestamp to implement the Lamport timestamp mechanism
+};
