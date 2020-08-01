@@ -25,3 +25,16 @@ $ mkdir build && cd build
 $ cmake ..
 $ make
 ```
+
+## 2. Build and run the example.
+```
+$ cd ~/Rlib/testRlib
+$ mkdir build && cd build
+$ cmake ..
+$ make
+$ ./testRlibPub
+```
+Open another terminal and run:
+```
+$ ./testRlibSub
+```
