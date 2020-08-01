@@ -2,8 +2,6 @@
 #ifndef SUBSCRIBER_HPP
 #define SUBSCRIBER_HPP
 
-#pragma once
-
 #include <fastdds/dds/domain/DomainParticipantFactory.hpp>
 #include <fastdds/dds/domain/DomainParticipant.hpp>
 #include <fastdds/dds/topic/TypeSupport.hpp>
