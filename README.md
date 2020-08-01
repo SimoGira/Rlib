@@ -18,7 +18,7 @@ Then clone the Rlib project:
 ```
 $ git clone https://github.com/SimoGira/Rlib
 ```
-And finally you can build dataflow-orbslam
+And finally you can build the library
 ```
 $ cd ~/Rlib
 $ mkdir build && cd build
