@@ -15,7 +15,7 @@
 
 namespace rlib {
 
-  Publisher::Publisher(eprosima::fastdds::dds::TopicDataType* topicDataType)
+  Publisher::Publisher(efdds::TopicDataType* topicDataType)
           : participant_(nullptr)
           , publisher_(nullptr)
           , topic_(nullptr)
@@ -36,16 +36,16 @@ namespace rlib {
         participant_->delete_topic(topic_);
     }
 
-    eprosima::fastdds::dds::DomainParticipantFactory::get_instance()->delete_participant(participant_);
+    efdds::DomainParticipantFactory::get_instance()->delete_participant(participant_);
   }
 
   bool Publisher::init(std::string topicName, std::string topicDataTypeName) {
     //hello_.index(0);
     //hello_.message("HelloWorld");
 
-    eprosima::fastdds::dds::DomainParticipantQos participantQos;
+    efdds::DomainParticipantQos participantQos;
     participantQos.name("Participant_publisher");
-    participant_ = eprosima::fastdds::dds::DomainParticipantFactory::get_instance()->create_participant(0, participantQos);
+    participant_ = efdds::DomainParticipantFactory::get_instance()->create_participant(0, participantQos);
 
     if (participant_ == nullptr) {
         return false;
@@ -55,21 +55,21 @@ namespace rlib {
     type_.register_type(participant_);
 
     // Create the publications Topic
-    topic_ = participant_->create_topic(topicName, topicDataTypeName, eprosima::fastdds::dds::TOPIC_QOS_DEFAULT);
+    topic_ = participant_->create_topic(topicName, topicDataTypeName, efdds::TOPIC_QOS_DEFAULT);
 
     if (topic_ == nullptr) {
         return false;
     }
 
     // Create the Publisher
-    publisher_ = participant_->create_publisher(eprosima::fastdds::dds::PUBLISHER_QOS_DEFAULT, nullptr);
+    publisher_ = participant_->create_publisher(efdds::PUBLISHER_QOS_DEFAULT, nullptr);
 
     if (publisher_ == nullptr) {
         return false;
     }
 
     // Create the DataWriter
-    writer_ = publisher_->create_datawriter(topic_, eprosima::fastdds::dds::DATAWRITER_QOS_DEFAULT, &listener_);
+    writer_ = publisher_->create_datawriter(topic_, efdds::DATAWRITER_QOS_DEFAULT, &listener_);
 
     if (writer_ == nullptr) {
         return false;
@@ -83,7 +83,7 @@ namespace rlib {
     }
     if (listener_.matched_ > 0) {
         //hello_.index(hello_.index() + 1);
-        writer_->write(&data_);
+        writer_->write(data_);
         return true;
     }
     return false;

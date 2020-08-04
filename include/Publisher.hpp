@@ -17,20 +17,22 @@ namespace rlib {
   //   eprosima::fastdds::dds::TopicDataType* pubSubType;
   // } customData_;
 
+  namespace efdds = eprosima::fastdds::dds;
+
   class Publisher {
   private:
 
     //CustomDataType data_;
 
-    eprosima::fastdds::dds::DomainParticipant* participant_;
-    eprosima::fastdds::dds::Publisher* publisher_;
-    eprosima::fastdds::dds::Topic* topic_;
-    eprosima::fastdds::dds::DataWriter* writer_;
-    eprosima::fastdds::dds::TypeSupport type_;
+    efdds::DomainParticipant* participant_;
+    efdds::Publisher* publisher_;
+    efdds::Topic* topic_;
+    efdds::DataWriter* writer_;
+    efdds::TypeSupport type_;
 
     void* data_;
 
-    class PubListener : public eprosima::fastdds::dds::DataWriterListener {
+    class PubListener : public efdds::DataWriterListener {
     public:
 
       PubListener(): matched_(0) {}
@@ -38,7 +40,7 @@ namespace rlib {
       ~PubListener() override {}
 
       // DataWriter’s listener callback
-      void on_publication_matched(eprosima::fastdds::dds::DataWriter*, const eprosima::fastdds::dds::PublicationMatchedStatus& info) override {
+      void on_publication_matched(efdds::DataWriter*, const efdds::PublicationMatchedStatus& info) override {
         if (info.current_count_change == 1) {
             matched_ = info.total_count;
             std::cout << "Publisher matched." << std::endl;
@@ -60,7 +62,7 @@ namespace rlib {
 
   public:
 
-    Publisher(eprosima::fastdds::dds::TopicDataType* topicDataType);
+    Publisher(efdds::TopicDataType* topicDataType);
 
     virtual ~Publisher();
 

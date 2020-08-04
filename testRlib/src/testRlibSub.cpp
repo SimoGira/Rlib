@@ -16,6 +16,17 @@
 //#include "../../Rlib/include/Subscriber.hpp"
 #include "../../include/Subscriber.hpp"
 #include "TemperaturePubSubTypes.h"
+#include "../../include/Utils.hpp"
+
+void printMessageCallback(void* data){
+  if (data != nullptr) {
+    Temperature* temperatureData =  reinterpret_cast<Temperature*>(&data);
+    std::cout << "Temperature: " << temperatureData->temperature()
+              << " with variance: " << temperatureData->variance()
+              << " RECEIVED." << std::endl;
+  }
+}
+
 
 int main(int argc, char const *argv[]) {
 
@@ -25,7 +36,11 @@ int main(int argc, char const *argv[]) {
   rlib::Subscriber* mysub = new rlib::Subscriber(new TemperaturePubSubType());
 
   if(mysub->init("MyTopic", "Temperature")) {
-        mysub->run(static_cast<uint32_t>(samples));
+    while(mysub->listener_.samples_ < samples) {
+        printMessageCallback(mysub->listener_.data_);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+    //    mysub->run(static_cast<uint32_t>(samples));
   }
 
   delete mysub;

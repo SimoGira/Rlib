@@ -11,38 +11,31 @@
 #include <fastdds/dds/subscriber/qos/DataReaderQos.hpp>
 #include <fastdds/dds/subscriber/SampleInfo.hpp>
 
+#include "Utils.hpp"
+
 namespace rlib {
+
+  namespace efdds = eprosima::fastdds::dds;
+
   class Subscriber {
+
   private:
 
-    eprosima::fastdds::dds::DomainParticipant* participant_;
-    eprosima::fastdds::dds::Subscriber* subscriber_;
-    eprosima::fastdds::dds::DataReader* reader_;
-    eprosima::fastdds::dds::Topic* topic_;
-    eprosima::fastdds::dds::TypeSupport type_;
+    efdds::DomainParticipant* participant_;
+    efdds::Subscriber* subscriber_;
+    efdds::DataReader* reader_;
+    efdds::Topic* topic_;
+    efdds::TypeSupport type_;
 
-    //static void* dataSub_;
 
-    class SubListener : public eprosima::fastdds::dds::DataReaderListener {
-    public:
 
-        SubListener();
 
-        ~SubListener() override {}
-
-        void on_subscription_matched(eprosima::fastdds::dds::DataReader*, const eprosima::fastdds::dds::SubscriptionMatchedStatus& info) override;
-
-        void on_data_available(eprosima::fastdds::dds::DataReader* reader) override;
-
-        void* data_;
-
-        std::atomic_int samples_;
-
-    } listener_;
 
   public:
 
-    Subscriber(eprosima::fastdds::dds::TopicDataType* topicDataType);
+    //static Observer<void*> observer_;
+
+    Subscriber(efdds::TopicDataType* topicDataType);
 
     virtual ~Subscriber();
 
@@ -51,7 +44,28 @@ namespace rlib {
 
     //!Run the Subscriber
     void run(uint32_t samples);
+
+    class SubListener : public efdds::DataReaderListener {
+    public:
+
+        SubListener();
+
+        ~SubListener() override {}
+
+        void on_subscription_matched(efdds::DataReader*, const efdds::SubscriptionMatchedStatus& info) override;
+
+        void on_data_available(efdds::DataReader* reader) override;
+
+        void* data_;
+
+        std::atomic_int samples_;
+
+    } listener_;
+
+
   };
+
+
 } // rlib
 
 #endif
